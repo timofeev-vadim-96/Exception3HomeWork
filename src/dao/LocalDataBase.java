@@ -11,8 +11,8 @@ public class LocalDataBase {
         String fileName = user.getName() + ".txt";
         try (FileWriter writer = new FileWriter(fileName, true)) {
             writer.write(user.toString());
-        } catch (IOException | RuntimeException e) {
-            System.out.println("caught exception: " + e.getClass().getSimpleName());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
