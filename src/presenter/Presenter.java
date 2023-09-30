@@ -5,7 +5,6 @@ import localExceptions.WhiteSpaceQuantityException;
 import model.User;
 import view.View;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Presenter {
@@ -20,15 +19,16 @@ public class Presenter {
     private static final String NUMBER_REGEX = "(\\d*\\.)?\\d+";
     private static final String ENG_REGEX = "[a-zA-Z]+";
     private static final String CYRILLIC_REGEX = "[а-яёА-ЯЁ]+";
+    String DATA_REGEX = "(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[0-2])[.](19[0-9][0-9]|20[0-9][0-9])";
 
     public void createUser() {
         String newUser = view.createUser();
         isCorrectUser(newUser);
         String[] toParseUser = newUser.split(" ");
-        String name = toParseUser[0];
-        String surName = toParseUser[1];
+        String surName = toParseUser[0];
+        String name = toParseUser[1];
         String patronymic = toParseUser[2];
-        Date birthDay = convertDate(toParseUser[3]);
+        util.Date birthDay = convertDate(toParseUser[3]);
         String phoneNumber = toParseUser[4];
         char gender = toParseUser[5].charAt(0);
         User user = new User(name, surName, patronymic, birthDay, phoneNumber, gender);
@@ -50,7 +50,7 @@ public class Presenter {
             throw new IllegalArgumentException("Имя не может содержать символы, кроме букв!");
         } else if (!(userArray[2].matches(ENG_REGEX) || userArray[2].matches(CYRILLIC_REGEX))) {
             throw new IllegalArgumentException("Отчество не может содержать символы, кроме букв!");
-        } else if (!(isDate(userArray[3]))) {
+        } else if (!userArray[3].matches(DATA_REGEX)) {
             throw new IllegalArgumentException("Дата рождения не соответствует формату \"dd.mm.yyyy!\"");
         } else if (!userArray[4].matches(NUMBER_REGEX)) {
             throw new IllegalArgumentException("Номер телефона должен быть целым беззнаковым числом");
@@ -60,26 +60,12 @@ public class Presenter {
         return true;
     }
 
-    private boolean isDate(String birthDay) {
-        String[] birthDayArray = birthDay.split("\\.");
-        if (birthDayArray.length != 3) return false;
-        else if (!(birthDayArray[0].matches(NUMBER_REGEX) && Integer.parseInt(birthDayArray[0]) <= 31)) {
-            return false;
-        } else if (!(birthDayArray[1].matches(NUMBER_REGEX) && Integer.parseInt(birthDayArray[1]) <= 12)) {
-            return false;
-        } else if (!(birthDayArray[2].matches(NUMBER_REGEX) && Integer.parseInt(birthDayArray[2]) <= LocalDateTime.now().getYear())) { //г.р. не может быть
-//            больше, чем текущий
-            return false;
-        }
-        return true;
-    }
-
-    private Date convertDate(String date) {
+    private util.Date convertDate(String date) {
         String[] birthDayArray = date.split("\\.");
         int day = Integer.parseInt(birthDayArray[0]);
         int month = Integer.parseInt(birthDayArray[1]);
-        int year = Integer.parseInt(birthDayArray[2]) - 1900;
-        Date result = new Date(year, month, day);
+        int year = Integer.parseInt(birthDayArray[2]);
+        util.Date result = new util.Date(day, month, year);
         return result;
     }
 }

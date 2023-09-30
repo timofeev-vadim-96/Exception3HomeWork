@@ -1,16 +1,14 @@
 package model;
 
-import java.util.Date;
-
 public class User {
     private String name;
     private String surname;
     private String patronymic;
-    private Date birthDay;
+    private util.Date birthDay;
     private String phoneNumber;
     private char gender;
 
-    public User(String name, String surname, String patronymic, Date birthDay, String phoneNumber, char gender) {
+    public User(String name, String surname, String patronymic, util.Date birthDay, String phoneNumber, char gender) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -21,9 +19,8 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("<%s><%s><%s><%s><%s.%s.%s><%s>\n", this.name, this.surname, this.patronymic,
-                this.phoneNumber, this.birthDay.getDate(), this.birthDay.getMonth(), this.birthDay.getYear(),
-                this.gender);
+        return String.format("<%s><%s><%s><%s><%s><%s>\n", this.surname, this.name, this.patronymic,
+                this.phoneNumber, this.birthDay, this.gender);
     }
 
     public String getName() {
@@ -38,7 +35,7 @@ public class User {
         return patronymic;
     }
 
-    public Date getBirthDay() {
+    public util.Date getBirthDay() {
         return birthDay;
     }
 
