@@ -2,6 +2,9 @@ package presenter;
 
 import dao.LocalDataBase;
 import localExceptions.WhiteSpaceQuantityException;
+import localExceptions.WrongDataFormatException;
+import localExceptions.WrongGenderFormatException;
+import localExceptions.WrongPhoneNumberFormatException;
 import model.User;
 import view.View;
 
@@ -51,11 +54,11 @@ public class Presenter {
         } else if (!(userArray[2].matches(ENG_REGEX) || userArray[2].matches(CYRILLIC_REGEX))) {
             throw new IllegalArgumentException("Отчество не может содержать символы, кроме букв!");
         } else if (!userArray[3].matches(DATA_REGEX)) {
-            throw new IllegalArgumentException("Дата рождения не соответствует формату \"dd.mm.yyyy!\"");
+            throw new WrongDataFormatException();
         } else if (!userArray[4].matches(NUMBER_REGEX)) {
-            throw new IllegalArgumentException("Номер телефона должен быть целым беззнаковым числом");
+            throw new WrongPhoneNumberFormatException();
         } else if (!userArray[5].equals("f") && !userArray[5].equals("m")) {
-            throw new IllegalArgumentException("Пол может быть лишь \"f\" или \"m\"");
+            throw new WrongGenderFormatException();
         }
         return true;
     }
