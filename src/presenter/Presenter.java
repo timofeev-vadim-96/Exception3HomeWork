@@ -19,7 +19,7 @@ public class Presenter {
     private static final String NUMBER_REGEX = "(\\d*\\.)?\\d+";
     private static final String ENG_REGEX = "[a-zA-Z]+";
     private static final String CYRILLIC_REGEX = "[а-яёА-ЯЁ]+";
-    String DATA_REGEX = "(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[0-2])[.](19[0-9][0-9]|20[0-9][0-9])";
+    private static final String DATA_REGEX = "(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[0-2])[.](19[0-9][0-9]|20[0-9][0-9])";
 
     public void createUser() {
         String newUser = view.createUser();
